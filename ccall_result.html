@@ -9,12 +9,12 @@
 
 		<title>CCall</title>
 		<meta name="description" content="" />
-		<meta name="author" content="trevor.obrien" />
+		<meta name="author" content="nick.velloff" />
 
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="js/purl.js"></script>
 
 		<script type="text/javascript">
@@ -22,10 +22,10 @@
 
 				if (/Android/i.test(navigator.userAgent)) {
 					console.log('Android');
-					directMobileUser(false)
+					directMobileUser(false);
 				} else if (/iPhone/i.test(navigator.userAgent)) {
 					console.log('iPhone');
-					directMobileUser(true)
+					directMobileUser(true);
 				} else {
 					// unsupported device
 					console.log('unsupported device');
