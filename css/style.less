@@ -1,0 +1,534 @@
+/*
+  Frameless     <http://framelessgrid.com/>
+  by Joni Korpi     <http://jonikorpi.com/>
+  licensed under CC0  <http://creativecommons.org/publicdomain/zero/1.0/>
+  
+  Frameless simple demo by Mark Nugent
+*/
+
+//
+// Configuration
+//
+
+@font-size: 16;     // Your base font-size in pixels
+@em: @font-size*1em;  // Shorthand for outputting ems, e.g. "12/@em"
+
+@column: 48;  // The column-width of your grid in pixels
+@gutter: 24;  // The gutter-width of your grid in pixels
+
+
+//
+// Column-widths in variables, in ems
+//
+
+ @1cols: ( 1 * (@column + @gutter) - @gutter) / @em; @1col: @1cols;
+ @2cols: ( 2 * (@column + @gutter) - @gutter) / @em;
+ @3cols: ( 3 * (@column + @gutter) - @gutter) / @em;
+ @4cols: ( 4 * (@column + @gutter) - @gutter) / @em;
+ @5cols: ( 5 * (@column + @gutter) - @gutter) / @em;
+ @6cols: ( 6 * (@column + @gutter) - @gutter) / @em;
+ @7cols: ( 7 * (@column + @gutter) - @gutter) / @em;
+ @8cols: ( 8 * (@column + @gutter) - @gutter) / @em;
+ @9cols: ( 9 * (@column + @gutter) - @gutter) / @em;
+@10cols: (10 * (@column + @gutter) - @gutter) / @em;
+@11cols: (11 * (@column + @gutter) - @gutter) / @em;
+@12cols: (12 * (@column + @gutter) - @gutter) / @em;
+@13cols: (13 * (@column + @gutter) - @gutter) / @em;
+@14cols: (14 * (@column + @gutter) - @gutter) / @em;
+@15cols: (15 * (@column + @gutter) - @gutter) / @em;
+@16cols: (16 * (@column + @gutter) - @gutter) / @em;
+@17cols: (16 * (@column + @gutter) - @gutter) / @em;
+@18cols: (16 * (@column + @gutter) - @gutter) / @em;
+@19cols: (16 * (@column + @gutter) - @gutter) / @em;
+@20cols: (16 * (@column + @gutter) - @gutter) / @em;
+
+//
+// Column-widths in a function, in ems
+//
+
+.width (@cols:1) {
+  width: (@cols * (@column + @gutter) - @gutter) / @em;
+}
+
+
+/*
+  Margin, padding, and border resets
+  except for form elements
+*/
+
+body, div,
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, th, td,
+article, aside, figure, footer, header, hgroup, menu, nav, section {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+
+/*
+  Consistency fixes
+  adopted from http://necolas.github.com/normalize.css/
+*/
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, nav, section, audio, canvas, video {
+  display: block;
+}
+article{
+  position: relative;
+  padding: 40px 20% 20% 0%;
+  margin-top: 50px;
+  border-top: 2px solid @darkColor;
+}
+html {
+  height: 100%; 
+  -webkit-text-size-adjust: 100%; 
+  -ms-text-size-adjust: 100%;
+}
+
+body {min-height: 100%; font-size: 100%;}
+
+sub, sup {
+  font-size: 75%; 
+  line-height: 0; 
+  position: relative; 
+  vertical-align: baseline;
+}
+
+  sup {top: -0.5em;}
+  sub {bottom: -0.25em;}
+
+pre {
+  white-space: pre; 
+  white-space: pre-wrap; 
+  word-wrap: break-word;
+}
+
+b, strong {font-weight: bold;}
+abbr[title] {border-bottom: 1px dotted;}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a img, img {
+  -ms-interpolation-mode: bicubic;
+  border: 0;
+}
+@-webkit-keyframes error{
+  0%{
+    border-color: @errorColor;
+  }
+  100%{
+    border-color: @lightColor;
+  }
+}
+input, textarea, button, select {
+  margin: 0;
+  font-size: 100%;
+  line-height: normal;
+  vertical-align: baseline;
+  background: @lightColor;
+  outline: none;
+  border: none;
+  .rounded(6px);
+  padding: 11px 12px;
+  .body-font(1em);
+  color: inherit;
+  width: 100%;
+  .box-sizing;
+}
+input[type="text"]{
+  border: 3px @lightColor solid;
+}
+input.error{
+  -webkit-animation: error 2s ease-in;
+}
+button,
+html input[type="button"], 
+input[type="reset"], 
+input[type="submit"] {
+    cursor: pointer;
+    -webkit-appearance: button;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+      box-sizing: border-box;
+}
+
+textarea {overflow: auto;}
+
+
+/*
+  Type presets
+*/
+
+a, a:active, a:visited{
+  color: @highlightColor;
+}
+a:hover{
+  color: @darkColor;
+  .transition(.2s);
+}
+body {
+  .body-font(@font-size);
+  line-height: 24/@em;
+}
+
+h1{
+  .headline-font(50/@em);
+  line-height: 15/@em;
+  margin-bottom: 30px;
+  position: relative;
+  margin-left: -4px;
+}
+
+/***** common styles *****/
+
+@font-face {
+  font-family: 'icons';
+  src:url('fonts/icons.eot');
+  src:url('fonts/icons.eot?#iefix') format('embedded-opentype'),
+    url('fonts/icons.svg#icons') format('svg'),
+    url('fonts/icons.woff') format('woff'),
+    url('fonts/icons.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.body-font(@size){
+  font-size: @size;
+  font-family: 'museo-slab', 'Georgia', monospace;
+}
+.headline-font(@size){
+  font-size: @size;
+  font-family: 'futura-pt', 'Futura bold', 'Helvetica Neue', 'Helvetica', sans-serif;
+}
+.icon-font(@size){
+  font-size: @size;
+  font-family: 'icons';
+  text-transform: none;
+  letter-spacing:.0em;
+  line-height:1.8em;
+  -webkit-font-smoothing:antialiased;
+}
+.transition(@duration,@ease:@linear,@prop:all,@delay:0){
+  -webkit-transition: @prop @duration @delay @ease;
+  -moz-transition: @prop @duration @delay @ease;
+  -o-transition: @prop @duration @delay @ease;
+  -ms-transition: @prop @duration @delay @ease;
+  transition: @prop @duration @delay @ease;
+
+  -moz-transition-duration: @duration;
+  -moz-transition-property:@prop;
+  -moz-transition-delay:@delay;
+}
+.rounded(@radius){
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+  border-radius: @radius;
+}
+.shadow{
+  -moz-box-shadow: 0 2px 4px rgba(0,0,0,.15);
+  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.15);
+  box-shadow: 0 2px 4px rgba(0,0,0,.15);
+}
+.box-sizing{
+  -o-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@bgColor: #86cfc4;
+@darkColor: #534f5b;
+@lightColor: #FCF9CD;
+@borderColor: rgba(0,0,0,.05);
+@highlightColor: #ED5354;
+@errorColor: #ED5354;
+
+@easeIn: cubic-bezier(0.825, 0.000, 1.000, 0.640);
+@easeInOut: cubic-bezier(0.665, 0.000, 0.430, 1);
+@easeOut: cubic-bezier(0.200, 0.470, 0.435, 0.970);
+@linear: cubic-bezier(0.250, 0.250, 0.750, 0.750);
+
+body {
+  background: @bgColor url('../img/bg.png');
+  color: @darkColor;
+  .box-sizing;
+  }
+  
+#container {
+  width: @4cols;
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.logo {
+  display: block;
+  .icon-font(99/@em);
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+}
+#cc-logo{
+  position: relative;
+  margin: auto 0 20px;
+  top: 20px;
+}
+#experiment-logo{
+  font-size: 3em;
+  padding: 0px;
+  left: 0;
+  width: 100%;
+  .box-sizing;
+  cursor: pointer;
+  a{
+    color: @darkColor;
+    text-decoration: none;
+  }
+  a:hover{
+    color: @highlightColor;
+  }
+}
+.icon{
+  .icon-font(2em);
+}
+
+p {
+  padding: 0 12/@em 22/@em 3/@em;
+  font-size: 1.1em;
+  line-height: 1.6em;
+}
+
+#footer {
+    padding-top: 40/@em;  
+}
+a.trigger {
+  position: absolute;
+  text-decoration: none;
+  top: 10px;
+  right: 0;
+  font-size: 16px;
+  letter-spacing: -1px;
+  font-family: 'futura-pt', 'Futura bold', 'Helvetica Neue', 'Helvetica', sans-serif;
+  color: #fff;
+  padding: 20px 40px 20px 15px;
+  font-weight: 400;
+  background: #534f5b url(../img/plus.png) 85% 55% no-repeat;
+  border: 1px solid #444444;
+  -moz-border-radius-topleft: 20px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius-bottomleft: 20px;
+  -webkit-border-bottom-left-radius: 20px;
+  display: block;
+}
+a.trigger:hover {
+  position: absolute;
+  text-decoration: none;
+  top: 10px;
+  right: 0;
+  font-size: 16px;
+  letter-spacing: -1px;
+  font-family: 'futura-pt', 'Futura bold', 'Helvetica Neue', 'Helvetica', sans-serif;
+  color: #fff;
+  padding: 20px 40px 20px 20px;
+  font-weight: 400;
+  background: #222222 url(../img/plus.png) 85% 55% no-repeat;
+  border: 1px solid #444444;
+  -moz-border-radius-topleft: 20px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius-bottomleft: 20px;
+  -webkit-border-bottom-left-radius: 20px;
+  display: block;
+}
+a.active.trigger {
+  background: #222222 url(../img/minus.png) 85% 55% no-repeat;
+}
+.panel {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  display: none;
+  background: #000000;
+  border: 1px solid #444444;
+  -moz-border-radius-topleft: 20px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius-bottomleft: 20px;
+  -webkit-border-bottom-left-radius: 20px;
+  width: 260px;
+  height: auto;
+  padding: 40px 10px 50px 20px;
+  filter: alpha(opacity=85);
+  opacity: .85;
+}
+.panel p {
+  margin: 0 0 6px 0;
+  padding: 0;
+  font-size: 0.9em;
+  color: #cccccc;
+  font-family: 'museo-slab', 'Georgia', monospace;
+}
+.panel h3 {
+  margin: 0 0 5px 0;
+  padding: 0;
+  font-size: 0.9em;
+  color: #cccccc;
+  font-family: 'futura-pt', 'Futura bold', 'Helvetica Neue', 'Helvetica', sans-serif;
+}
+.panel a,
+.panel a:visited {
+  margin: 0;
+  padding: 0;
+  color: #9FC54E;
+  text-decoration: none;
+  border-bottom: 1px solid #9FC54E;
+}
+.panel a:hover,
+.panel a:visited:hover {
+  margin: 0;
+  padding: 0;
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid #ffffff;
+}
+button{
+  .rounded(100px);
+  background: @highlightColor;
+  width: 100%;
+  margin-top: 30px;
+  .headline-font(1.1em);
+  letter-spacing: .1em;
+  color: @lightColor;
+  &:hover{
+    background-color: @darkColor;
+  }
+}
+#confID{
+  margin-top: 2%;
+}
+.step{
+  margin-bottom: 16px;
+}
+.step-name{
+  display: block;
+  .headline-font(1em);
+  letter-spacing: .05em;
+}
+/***** end common styles *****/
+
+
+
+
+
+
+/**
+  Mobile layout 
+  240-600 px
+**/
+
+@media screen and (min-width: 25em) {
+
+  h1{
+    font-size: 57/@em;
+  }
+
+}
+
+/*
+  Wide mobile layout 
+  480-767 px
+  Zoomed in above 480 px
+*/
+@media screen and (min-height: 40em){
+  #contact{
+    position: absolute;
+    bottom: 100px;
+  }
+}
+@media screen and (min-width: 30em){
+  #container {
+    width: @6cols;
+    padding-top: 30/@em;
+  }
+  input[type="text"]{
+    width: 49.5%;
+    margin: 0;
+  }
+  #confID{
+    margin-top: 0%;
+  }
+  #logo{
+    line-height: 2em;
+    font-size: 43/@em;
+  }
+
+
+}
+
+/*
+  Tablet layout 
+  600-911 px
+  Zoomed in above 600 px
+*/
+
+@media screen and (min-width: 37.5em) {
+
+  #container {
+    width: @8cols;
+    padding-left: @gutter/@em;
+    padding-top: 100/@em;
+  }
+  #logo{
+    font-size: 56/@em;
+  }
+  #overlay{
+    border: 22px solid @darkColor;
+  }
+}
+
+
+/*
+  desktop layout 
+  1072-infinity px
+
+*/
+
+@media screen and (min-width: 67em) {
+  #container {
+    width: @8cols;
+  }
+  #cc-logo {
+    position: absolute;
+    left: 40%;
+    margin-left:-400px;
+    top: 80px;
+  }
+  footer{
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+  body{
+    font-size: 18/@em;
+  }
+
+}
+
+
+/*
+  full page zoom above 1024 px. still desktop layout.
+*/
+
+@media screen and (min-width: 64em) {
+
+}
+
+

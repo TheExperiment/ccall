@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame 
+       Remove this if you use the .htaccess -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+  <title>index</title>
+  <meta name="description" content="" />
+  <meta name="author" content="nick.velloff" />
+
+  <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  
+  <script type="text/javascript">
+	
+	function genLink()
+	{
+		// check for missing #
+		var cd = calendarForm.confID.value;
+		if (cd.charAt(cd.length-1) != '#')
+		{
+			var r=confirm("I don't see a # at the end of your code. Continue?");
+			if (r==true)
+			{
+				writeContent();
+			}
+			
+		}
+		else
+		{
+			writeContent();
+		}
+				
+	}
+	function writeContent()
+	{
+		var meetingDescriptionIOS = '<a href="tel:' + calendarForm.confNumber.value
+			+ ',,,' + calendarForm.confID.value + '">Dial your conference number on iOS!</a>';
+		var meetingDescriptionAndroid = '<a href="tel:' + calendarForm.confNumber.value
+			+ ' ppp ' + calendarForm.confID.value + '">Dial your conference number on Android!</a>';
+		var meetingDescriptionOther = 
+			'------- Manual Conference Info ------- <br />' +
+			'Conference Number: ' + calendarForm.confNumber.value + '<br />' +
+			'Conference Id: ' + calendarForm.confID.value + '<br />' +
+			'-------------------------------------- <br />';
+			
+			var rtCp = 
+			'<p>' + '<p>' + 
+			meetingDescriptionIOS + '<p>' + 
+			meetingDescriptionAndroid + '<p>' + 
+			meetingDescriptionOther;
+			
+			console.log(rtCp);
+			
+			$('div.resultDiv').html(rtCp);
+	}
+	
+  </script>
+  
+</head>
+
+<body>
+  <div>
+    <header />
+  
+    <div>
+    	<form id="calendarForm">
+     		<input type="text" id="confNumber" placeholder="conference number"  /><br>
+     		<input type="text" id="confID" placeholder="conference id"  /><br>
+  	 		<button type="button" onclick="genLink()" >Gimme the links!</button>
+		</form>
+    </div>
+	
+	<div class="resultDiv" />
+
+    <footer />
+    
+  </div>
+</body>
+</html>

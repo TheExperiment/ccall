@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>CCall</title>
+		<meta name="description" content="" />
+		<meta name="author" content="trevor.obrien" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="js/purl.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				if (/Android/i.test(navigator.userAgent)) {
+					console.log('Android');
+					directMobileUser(false)
+				} else if (/iPhone/i.test(navigator.userAgent)) {
+					console.log('iPhone');
+					directMobileUser(true)
+				} else {
+					// unsupported device
+					console.log('unsupported device');
+					$('div.resultDiv').html('Unsupported Device (use this on iPhone and Android)');
+				}
+
+			});
+
+			function directMobileUser(isIOS) {
+				var confNumber = $.url().param("n");
+				var confID = $.url().param("i");
+				var useHash = (($.url().param("useHash") == 'true') ? (true) : (false) );
+				//console.log(confNumber);
+				//console.log(confID);
+				//console.log(useHash);
+				//console.log( $.url().param("useHash") );
+
+				/*
+				 <a href="tel:+1800229933">tel:+1800229933</a> <br /><br />
+				 <a href="tel:+1800229933;postd=4">tel:+1800229933;postd=4</a> <br /><br />
+				 <a href="wtai://wp/mc;+1800229933">wtai://wp/mc;+1800229933</a> <br /><br />
+				 */
+				if (isIOS) {
+					window.location = 'tel:' + confNumber + ',,,' + confID + ((useHash) ? ('#') : ('') );
+				} else {
+					$('div.resultDiv').append( '<a href="tel:' + confNumber + ';postd=' + confID + ((useHash) ? ('#') : ('') + '">VERSION 1</a> <br /><br />'  );
+					$('div.resultDiv').append( '<a href="tel:' + confNumber + 'pp' + confID + ((useHash) ? ('#') : ('') + '">VERSION 2</a> <br /><br />'  );
+					$('div.resultDiv').append( '<a href="tel:' + confNumber + ';pp' + confID + ((useHash) ? ('#') : ('') + '">VERSION 3</a> <br /><br />'  );
+					$('div.resultDiv').append( '<a href="wtai://wp/mc;:' + confNumber + '">wtai://wp/mc;+1800229933</a> <br /><br />'  );
+					
+				}
+				
+			}
+		</script>
+
+	</head>
+
+	<body>
+		<div>
+			<header></header>
+
+			<div class="resultDiv"></div>
+
+			<footer>
+
+			</footer>
+		</div>
+	</body>
+</html>

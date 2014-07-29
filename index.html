@@ -1,0 +1,173 @@
+
+<!doctype html>
+<html>
+	
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		
+		<title>Ccall : 1-Click Conference Calls</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>	
+    	<script type="text/javascript" src="//use.typekit.net/rrf5isi.js"></script>
+    	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    	<script type="text/javascript" async="" src="js/ics-libs.js"></script>
+		
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		
+		<!--[if lt IE 9]>
+		<script>
+		document.createElement('video');
+		</script>
+		<![endif]-->
+
+<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.js"></script>
+
+ 
+
+	</head>
+	
+	<body lang="en">
+
+    <div id="container">
+		
+		  <div id="main">
+			
+				<div id="cc-logo" class="logo" alt="ccall">c</div>
+        <h1>Conference calls<br>without ass pain.</h1>
+        <p>
+          <div class="step"><span class="step-name">STEP 1.</span> Enter the phone and conference code # below.</div>
+          <div class="step"><span class="step-name">STEP 2.</span> We generate a calendar invite with a magic mobile link.<br></div>
+          <div class="step"><span class="step-name">STEP 3.</span> Send the magic link so attendees can avoid entering the code.</div>
+        </p>	
+        
+			
+
+    	<form id="calendarForm" name="calendarForm">
+    	
+  			<!--<input type='tel' pattern="[0-9]{10,10}" id="confNumber" placeholder="Phone #"  autocomplete="off"  maxlength="10" required>-->
+  			<!--<input id="confNumber" type='tel' pattern='[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' placeholder='Phone #'>-->
+  			<input type="text" id="confNumber" placeholder="phone #">
+  			<input type="text" id="confID" placeholder="conf code #">	
+  			<button type="button" id="icsButton" onclick="validateIcs()">GET CALENDAR INVITE</button>
+  		</form>
+      <article>
+<b>We made CCALL because</b> it’s a pain in the ass to enter conference codes from a mobile phone. If you've ever had a calendar invite with a long conference ID and scribbled it on the back of your hand to avoid jumping between the email, your calendar and your phone app then you understand why we did this.
+<br><br>
+<div class="logo" id="experiment-logo"><a href="http://experiment.bz">e</a></div>is a design and technology collective built to solve modern problems.
+        </article>
+
+		  </div>
+				
+		</div><!-- main -->
+		
+
+	</div><!-- container -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/libs/jquery-1.9.1.min.js"><\/script>')</script>
+    <script src="js/plugins.js"></script>
+    <script src="js/script.js"></script>
+		
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-45973655-2', 'experiment.bz');
+	  ga('send', 'pageview');
+	</script>
+	
+	
+	 <script type="text/javascript">
+	
+	function validateIcs()
+	{
+    // check for valid numbers
+    var error;
+    var cn = calendarForm.confNumber.value.replace(/\D/g,'');
+    var cd = calendarForm.confID.value;
+
+    if(cn.length != 7 && cn.length != 10 && cn.length != 11){
+      calendarForm.confNumber.className = 'error';
+      error = true;
+    }
+    if(cd.length < 2){
+      calendarForm.confID.className = 'error'
+      error = true;
+    }
+    setTimeout(function(){
+      calendarForm.confID.className = '';
+      calendarForm.confNumber.className = '';
+    },2000);
+    
+    if(error){
+      return;
+    }
+		// check for missing #
+		if (cd.charAt(cd.length-1) != '#')
+		{
+			var r=confirm("I don't see a # at the end of your conference id. Continue?");
+			if (r==true)
+			{
+				createICS();
+			}
+			
+		}
+		else
+		{
+			createICS();
+		}
+				
+	}
+	
+	
+	function createICS()
+	{
+		var myDir = $(location).attr('href').substring( 0, $(location).attr('href').lastIndexOf( "/" ) + 1);
+		
+		// strip off # if one exists
+		var localConfId = calendarForm.confID.value;
+		var lastChar = localConfId.substr(calendarForm.confID.value.length - 1);
+		var useHash = lastChar == '#';
+		
+		// strip off all non-numerical characters from phone number
+		var localConfPhoneNumber = calendarForm.confNumber.value;
+		localConfPhoneNumber = localConfPhoneNumber.replace(/\D/g,'');
+		
+		if (useHash) // strip it off
+		{
+			localConfId = localConfId.substring(0, localConfId.length - 1);
+		}
+		var callURL = myDir + 'ccall_result.html?n=' +  
+			localConfPhoneNumber + 
+			'&i=' + localConfId +
+			((useHash) ? ('&useHash=true') : ('&useHash=false'));		
+		
+		var msg = 'One click url (iPhone and Android): \\n' +
+			callURL + '\\n\\n\\n' + 
+			'Old school (land line) conference info' + '\\n' + 
+			'Conference phone number: ' + calendarForm.confNumber.value + '\\n' +
+			'Conference id: ' + calendarForm.confID.value + '\\n';
+		
+		var cDate = new Date();
+		var tDate = cDate.getFullYear().toString() + ('0' + (cDate.getMonth()+1)).slice(-2) + ('0' + cDate.getDate()).slice(-2) + 'T12000';
+		
+		
+		
+		//var tDate = now.format("yyyyMdd") + 'T12000';
+		
+		console.log('date passed' + tDate);
+		
+		download_ics('one-click', '', msg, '', tDate, tDate);
+	}
+	
+  </script>	
+	
+	</body>
+	
+</html>
