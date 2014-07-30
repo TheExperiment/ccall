@@ -1,14 +1,3 @@
-function ShortURL(json) {
-	this.kind = json.kind;
-	this.id = json.id;
-	this.longUrl = json.longUrl;
+function ShortURL(url) {
+	this.url = url;
 }
-
-
-/*
-	{
-	 "kind": "urlshortener#url",
-	 "id": "http://goo.gl/fbsS",
-	 "longUrl": "http://www.google.com/"
-	}
- */

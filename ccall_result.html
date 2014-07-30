@@ -19,7 +19,6 @@
 
 		<script type="text/javascript">
 			$(document).ready(function() {
-
 				if (/Android/i.test(navigator.userAgent)) {
 					console.log('Android');
 					directMobileUser(false);
@@ -31,7 +30,6 @@
 					console.log('unsupported device');
 					$('div.resultDiv').html('Unsupported Device (use this on iPhone and Android)');
 				}
-
 			});
 
 			function directMobileUser(isIOS) {
@@ -51,13 +49,30 @@
 				if (isIOS) {
 					window.location = 'tel:' + confNumber + ',,,' + confID + ((useHash) ? ('#') : ('') );
 				} else {
-					$('div.resultDiv').append( '<a href="tel:' + confNumber + ';postd=' + confID + ((useHash) ? ('#') : ('') + '">VERSION 1</a> <br /><br />'  );
-					$('div.resultDiv').append( '<a href="tel:' + confNumber + 'pp' + confID + ((useHash) ? ('#') : ('') + '">VERSION 2</a> <br /><br />'  );
-					$('div.resultDiv').append( '<a href="tel:' + confNumber + ';pp' + confID + ((useHash) ? ('#') : ('') + '">VERSION 3</a> <br /><br />'  );
-					$('div.resultDiv').append( '<a href="wtai://wp/mc;:' + confNumber + '">wtai://wp/mc;+1800229933</a> <br /><br />'  );
 					
+					/*
+					 * is Android - annoyingly have not been able to get it to retain the extension
+					 * below are all the attempted formats, everything i could find
+					 */
+					window.location = 'tel:' + confNumber;
+					
+					// <a data-rel="external" href="tel:1231231234">(123) 123-1234</a>
+					
+					// window.location = 'tel:' + confNumber + '%2C%2C%2C' + confID + ((useHash) ? ('%23') : ('') );
+					// window.location = 'tel:' + confNumber + '%2C%2C%2C' + confID + ((useHash) ? ('') : ('') );
+					
+					// window.location = 'tel:' + confNumber + 'T' + confID + ((useHash) ? ('') : ('') );
+					
+					
+					// window.location = 'tel:+1-866-203-7011%2C9587123509';
+					
+					// $('div.resultDiv').append( '<a data-rel="external" href="tel:' + confNumber + ' ppp ' + confID + ((useHash) ? ('#') : ('')) + '">DIAL!!!</a> <br /><br />'  );
+					
+					// $('div.resultDiv').append( '<a href="tel:' + confNumber + ';postd=' + confID + ((useHash) ? ('#') : ('')) + '">VERSION 1</a> <br /><br />'  );
+					// $('div.resultDiv').append( '<a href="tel:' + confNumber + 'pp' + confID + ((useHash) ? ('#') : ('')) + '">VERSION 2</a> <br /><br />'  );
+					// $('div.resultDiv').append( '<a href="tel:' + confNumber + ';pp' + confID + ((useHash) ? ('#') : ('')) + '">VERSION 3</a> <br /><br />'  );
+					// $('div.resultDiv').append( '<a href="wtai://wp/mc;:' + confNumber + '">wtai://wp/mc;+1800229933</a> <br /><br />'  );
 				}
-				
 			}
 		</script>
 

@@ -5,6 +5,8 @@ var Service = (function() {
 
 	function init() {
 
+		jQuery.urlShortener.settings.apiKey = 'AIzaSyCZJB8FLx9dguZ3sngkRm0IHArYhUJQ-bY';
+
 		function triggerShortURLDataComplete(newData) {
 			$(serviceInstance).trigger("shortURLDataSuccess", {
 				data : newData
@@ -14,21 +16,14 @@ var Service = (function() {
 		return {
 			//POST to get the shortened URL from google url shortner
 			getShortURL : function(url) {
-				var reqURL = "https://www.googleapis.com/urlshortener/v1/url";
-				$.ajax({
-					url : reqURL,
-					type : 'post',
-					data : {
-						longUrl : url,
-						key : 'AIzaSyCZJB8FLx9dguZ3sngkRm0IHArYhUJQ-bY'
-					},
-					headers : {
-						//
-					},
-					dataType : 'json',
-					success : function(result) {
-						var vo = new ShortURL(result);
+				jQuery.urlShortener({
+					longUrl : url,
+					success : function(shortUrl) {
+						var vo = new ShortURL(shortUrl);
 						triggerShortURLDataComplete(vo);
+					},
+					error : function(err) {
+						alert(JSON.stringify(err));
 					}
 				});
 			}
@@ -51,20 +46,20 @@ var Service = (function() {
 })();
 /*
  ============================
-API Endpoints and Urls
-============================
+ API Endpoints and Urls
+ ============================
 
-Request
-AIzaSyCZJB8FLx9dguZ3sngkRm0IHArYhUJQ-bY
-https://www.googleapis.com/urlshortener/v1/url
-Content-Type: application/json
-{"longUrl": "http://www.google.com/"}
+ Request
+ AIzaSyCZJB8FLx9dguZ3sngkRm0IHArYhUJQ-bY
+ https://www.googleapis.com/urlshortener/v1/url
+ Content-Type: application/json
+ {"longUrl": "http://www.google.com/"}
 
-Response
-{
+ Response
+ {
  "kind": "urlshortener#url",
  "id": "http://goo.gl/fbsS",
  "longUrl": "http://www.google.com/"
-}
+ }
 
  */
