@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8" />
 
-		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
-		Remove this if you use the .htaccess -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-		<title>CCall</title>
-		<meta name="description" content="" />
-		<meta name="author" content="nick.velloff" />
+		<title>Ccall : 1-Click Conference Calls</title>
 
-		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-		<link rel="shortcut icon" href="/favicon.ico" />
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<script type="text/javascript" src="//use.typekit.net/rrf5isi.js"></script>
+		<script type="text/javascript">
+			try {
+				Typekit.load();
+			} catch(e) {
+			}
+		</script>
+
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="js/purl.js"></script>
 
@@ -49,25 +52,24 @@
 				if (isIOS) {
 					window.location = 'tel:' + confNumber + ',,,' + confID + ((useHash) ? ('#') : ('') );
 				} else {
-					
+
 					/*
 					 * is Android - annoyingly have not been able to get it to retain the extension
 					 * below are all the attempted formats, everything i could find
 					 */
 					window.location = 'tel:' + confNumber;
-					
+
 					// <a data-rel="external" href="tel:1231231234">(123) 123-1234</a>
-					
+
 					// window.location = 'tel:' + confNumber + '%2C%2C%2C' + confID + ((useHash) ? ('%23') : ('') );
 					// window.location = 'tel:' + confNumber + '%2C%2C%2C' + confID + ((useHash) ? ('') : ('') );
-					
+
 					// window.location = 'tel:' + confNumber + 'T' + confID + ((useHash) ? ('') : ('') );
-					
-					
+
 					// window.location = 'tel:+1-866-203-7011%2C9587123509';
-					
+
 					// $('div.resultDiv').append( '<a data-rel="external" href="tel:' + confNumber + ' ppp ' + confID + ((useHash) ? ('#') : ('')) + '">DIAL!!!</a> <br /><br />'  );
-					
+
 					// $('div.resultDiv').append( '<a href="tel:' + confNumber + ';postd=' + confID + ((useHash) ? ('#') : ('')) + '">VERSION 1</a> <br /><br />'  );
 					// $('div.resultDiv').append( '<a href="tel:' + confNumber + 'pp' + confID + ((useHash) ? ('#') : ('')) + '">VERSION 2</a> <br /><br />'  );
 					// $('div.resultDiv').append( '<a href="tel:' + confNumber + ';pp' + confID + ((useHash) ? ('#') : ('')) + '">VERSION 3</a> <br /><br />'  );
@@ -78,15 +80,12 @@
 
 	</head>
 
-	<body>
-		<div>
-			<header></header>
-
-			<div class="resultDiv"></div>
-
-			<footer>
-
-			</footer>
-		</div>
+	<body lang="en">
+		<div id="container">
+			<div id="main">
+				<div id="cc-logo" class="logo" alt="ccall">
+					c
+				</div>
+				<h1><div class="resultDiv"></div></h1>
 	</body>
 </html>
