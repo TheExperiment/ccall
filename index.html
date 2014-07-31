@@ -106,7 +106,7 @@
 			$(service).on("shortURLDataSuccess", function(event, response) {
 				console.log(response.data);
 				
-				$('#confForm').replaceWith('<h1>' + response.data.url + '</h1>');
+				$('#confForm').replaceWith('<h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
 				
 				
 			});
