@@ -33,15 +33,17 @@
 					console.log('unsupported device');
 					$('div.resultDiv').html('Unsupported Device (use this on iPhone)');
 				}
+				
+				$('#cc-logo').click(function() {
+					var httpBase = $(location).attr('href').substring(0, $(location).attr('href').lastIndexOf("/") + 1);
+					window.location = httpBase;
+				});
+				$('#cc-logo').hover(function() {
+			        $(this).css('cursor','pointer');
+			    });
 			});
 			
-			$('#cc-logo').click(function() {
-				var httpBase = $(location).attr('href').substring(0, $(location).attr('href').lastIndexOf("/") + 1);
-				window.location = httpBase;
-			});
-			$('#cc-logo').hover(function() {
-		        $(this).css('cursor','pointer');
-		    });
+			
 		    
 			function directMobileUser(isIOS) {
 				var confNumber = $.url().param("n");
