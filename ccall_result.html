@@ -31,7 +31,7 @@
 				} else {
 					// unsupported device
 					console.log('unsupported device');
-					$('div.resultDiv').html('Unsupported Device (use this on iPhone and Android)');
+					$('div.resultDiv').html('Unsupported Device (use this on iPhone)');
 				}
 			});
 
@@ -52,12 +52,15 @@
 				if (isIOS) {
 					window.location = 'tel:' + confNumber + ',,,' + confID + ((useHash) ? ('#') : ('') );
 				} else {
-
+					
+					console.log('unsupported device');
+					$('div.resultDiv').html('Not currently supported (use this on iPhone)');
+					
 					/*
 					 * is Android - annoyingly have not been able to get it to retain the extension
 					 * below are all the attempted formats, everything i could find
 					 */
-					window.location = 'tel:' + confNumber;
+					// window.location = 'tel:' + confNumber;
 
 					// <a data-rel="external" href="tel:1231231234">(123) 123-1234</a>
 
