@@ -94,6 +94,7 @@
 			ga('create', 'UA-45973655-2', 'experiment.bz');
 			ga('send', 'pageview');
 		</script>
+		
     <script>
       $("#confID").bind('keyup',keyHandler);
       function keyHandler (argument) {
@@ -107,26 +108,22 @@
 		<script type="text/javascript">
 		
 			var service = Service.getInstance();
-			
+			var scope = this;
 			/*
 			 * Listener for the service
 			 */
 			$(service).on("shortURLDataSuccess", function(event, response) {
 				console.log(response.data);
-				
-<<<<<<< HEAD
-				$('#confForm').replaceWith('<h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
+				//_trackEvent(category, action, opt_label, opt_value, opt_noninteraction)
+				// scope.ga.push(['_trackEvent', 'Url', 'Reveived', response.data]);
 				if (!$.browser.mobile) {
 					console.log('add copy/paste');
 					
 				}
+				
+				$('#link-holder').html('<div class="step" id="step3">Copy/paste this magic link so iPhoners can avoid pain.</div><h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
 			});
-=======
-				$('#link-holder').html('<div class="step" id="step3"> \
-            Copy/paste this magic link so iPhoners can avoid pain. \
-          </div><h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
-			 });
->>>>>>> e3e840c7a0b3b705b7670b6da696656d43879600
+				
 			
 		      var client = new ZeroClipboard( $('.clip_button') );
 		
