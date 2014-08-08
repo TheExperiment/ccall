@@ -131,9 +131,9 @@ input, textarea, button, select {
   font-size: 100%;
   line-height: normal;
   vertical-align: baseline;
-  background: @lightColor;
+  background: #fff;
   outline: none;
-  border: none;
+  border: 3px solid transparent;
   .rounded(6px);
   padding: 11px 12px;
   .body-font(1em);
@@ -141,8 +141,8 @@ input, textarea, button, select {
   width: 100%;
   .box-sizing;
 }
-input[type="text"]{
-  border: 3px @lightColor solid;
+input[type="text"]:focus,input[type="tel"]:focus{
+  border: 3px solid @darkColor;
 }
 input.error{
   -webkit-animation: error 2s ease-in;
@@ -255,9 +255,9 @@ h2{
   box-sizing: border-box;
 }
 
-@bgColor: #86cfc4;
+@lightColor: #86cfc4;
 @darkColor: #534f5b;
-@lightColor: #FCF9CD;
+@bgColor: #f4e7b4;
 @borderColor: rgba(0,0,0,.05);
 @highlightColor: #ED5354;
 @errorColor: #ED5354;
@@ -268,11 +268,20 @@ h2{
 @linear: cubic-bezier(0.250, 0.250, 0.750, 0.750);
 
 body {
-  background: @bgColor url('../img/bg.png');
+  background: @bgColor;
   color: @darkColor;
   .box-sizing;
   }
   
+.hidden{
+  display: none;
+}
+.inactive{
+  background: #000;
+  color: @bgColor;
+  opacity: .2;
+  pointer-events: none; 
+}
 #container {
   width: @4cols;
   margin: auto;
@@ -411,10 +420,10 @@ button{
   .rounded(100px);
   background: @highlightColor;
   width: 100%;
-  margin-top: 30px;
+  margin-bottom: 20px;
   .headline-font(1.1em);
   letter-spacing: .1em;
-  color: @lightColor;
+  color: @bgColor;
   &:hover{
     background-color: @darkColor;
   }
@@ -426,7 +435,7 @@ button{
   margin-bottom: 16px;
 }
 .step-name{
-  display: block;
+  display: inline;
   .headline-font(1em);
   letter-spacing: .05em;
 }
@@ -466,7 +475,7 @@ button{
     width: @6cols;
     padding-top: 30/@em;
   }
-  input[type="text"]{
+  input[type="text"],input[type="tel"]{
     width: 49.5%;
     margin: 0;
   }

@@ -34,34 +34,28 @@
 				without ass pain.<br></h1>
 				<h2>(iOS Only*)</h2>
 				<p>
-					<div class="step">
-						<span class="step-name">STEP 1.</span> Enter the phone and conference code # below.
-					</div>
-					<div class="step">
-						<span class="step-name">STEP 2.</span> We generate a magic mobile link.
-						<br>
-					</div>
-					<div class="step">
-						<span class="step-name">STEP 3.</span> Copy/paste the magic link so attendees can avoid entering the code.
-					</div>
+          <form id="confForm" name="confForm" action="javascript:validateForm();">
+            <div class="step">
+              Enter the phone and conference code # below.
+            </div>
+            <!--<input type='tel' pattern="[0-9]{10,10}" id="confNumber" placeholder="Phone #"  autocomplete="off"  maxlength="10" required>-->
+            <!--<input id="confNumber" type='tel' pattern='[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' placeholder='Phone #'>-->
+            <input type="tel" id="confNumber" placeholder="phone #">
+            <input type="tel" id="confID" placeholder="conf code #">
+            <br>
+            <br>
+            <button type="submit" id="submitButton" class="inactive">
+              GET MAGIC LINK
+            </button>
+            <div id="link-holder"></div>
+          </form>
 				</p>
-
-				<form id="confForm" name="confForm">
-
-					<!--<input type='tel' pattern="[0-9]{10,10}" id="confNumber" placeholder="Phone #"  autocomplete="off"  maxlength="10" required>-->
-					<!--<input id="confNumber" type='tel' pattern='[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' placeholder='Phone #'>-->
-					<input type="text" id="confNumber" placeholder="phone #">
-					<input type="text" id="confID" placeholder="conf code #">
-					<button type="button" id="submitButton" onclick="validateForm()">
-						GET MAGIC LINK
-					</button>
-				</form>
 				<article>
 					<b>We made CCALL because</b> it’s a pain in the ass to enter conference codes from a mobile phone. If you've ever had a calendar invite with a long conference ID and scribbled it on the back of your hand to avoid jumping between the email, your calendar and your phone app then you understand why we did this.
 					<br>
 					<br>
 					<div class="logo" id="experiment-logo">
-						<a href="http://theexperiment.io">e</a>
+						<a href="http://theexperiment.io"><img src="img/logo_exp.svg"></a>
 					</div>
 					is a design and technology collective built to solve modern problems.
 					<br><br>
@@ -100,6 +94,15 @@
 			ga('create', 'UA-45973655-2', 'experiment.bz');
 			ga('send', 'pageview');
 		</script>
+    <script>
+      $("#confID").bind('keyup',keyHandler);
+      function keyHandler (argument) {
+        if($(this).val().length >= 1){
+          $('#submitButton').removeClass('inactive');
+        }
+        
+      }
+    </script>
 
 		<script type="text/javascript">
 		
@@ -111,12 +114,19 @@
 			$(service).on("shortURLDataSuccess", function(event, response) {
 				console.log(response.data);
 				
+<<<<<<< HEAD
 				$('#confForm').replaceWith('<h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
 				if (!$.browser.mobile) {
 					console.log('add copy/paste');
 					
 				}
 			});
+=======
+				$('#link-holder').html('<div class="step" id="step3"> \
+            Copy/paste this magic link so iPhoners can avoid pain. \
+          </div><h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
+			 });
+>>>>>>> e3e840c7a0b3b705b7670b6da696656d43879600
 			
 		      var client = new ZeroClipboard( $('.clip_button') );
 		
@@ -162,7 +172,7 @@
 				}
 				// check for missing #
 				if (cd.charAt(cd.length - 1) != '#') {
-					var r = confirm("I don't see a # at the end of your conference id. Continue?");
+					var r = confirm("Cancel if you need to add a # to the end of your code.");
 					if (r == true) {
 						// createICS();
 						addMagicURL();
