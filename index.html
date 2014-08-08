@@ -32,11 +32,10 @@
 				<h1>Conference calls
 				<br>
 				without ass pain.<br></h1>
-				<h2>(iOS Only*)</h2>
 				<p>
           <form id="confForm" name="confForm" action="javascript:validateForm();">
             <div class="step">
-              Enter the phone and conference code # below.
+              We’ll combine the # and code into a single link for <b>iPhone*</b> users.
             </div>
             <!--<input type='tel' pattern="[0-9]{10,10}" id="confNumber" placeholder="Phone #"  autocomplete="off"  maxlength="10" required>-->
             <!--<input id="confNumber" type='tel' pattern='[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' placeholder='Phone #'>-->
@@ -55,7 +54,7 @@
 					<br>
 					<br>
 					<div class="logo" id="experiment-logo">
-						<a href="http://theexperiment.io"><img src="img/logo_exp.svg"></a>
+						<a href="mailto:nickvelloff@theexperiment.io"><img src="img/logo_exp.svg"></a>
 					</div>
 					is a design and technology collective built to solve modern problems.
 					<br><br>
@@ -89,7 +88,7 @@
 				m.parentNode.insertBefore(a, m);
 			})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-			ga('create', 'UA-45973655-2', 'experiment.bz');
+			ga('create', 'UA-45973655-2', 'ccall.me');
 			ga('send', 'pageview');
 		</script>
     <script>
@@ -111,7 +110,6 @@
 			 */
 			$(service).on("shortURLDataSuccess", function(event, response) {
 				console.log(response.data);
-				
 				$('#link-holder').html('<div class="step" id="step3"> \
             Copy/paste this magic link so iPhoners can avoid pain. \
           </div><h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
