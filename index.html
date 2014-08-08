@@ -81,6 +81,8 @@
 		<script src="js/plugins.js"></script>
 		<script src="js/script.js"></script>
 		<script src="js/libs/jquery.urlshortener.min.js"></script>
+		<script src="js/libs/detectmobilebrowser.js"></script>
+		<script src="js/libs/ZeroClipboard.min.js"></script>
 		
 		<script>
 			(function(i, s, o, g, r, a, m) {
@@ -110,9 +112,30 @@
 				console.log(response.data);
 				
 				$('#confForm').replaceWith('<h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
-				
-				
+				if (!$.browser.mobile) {
+					console.log('add copy/paste');
+					
+				}
 			});
+			
+		      var client = new ZeroClipboard( $('.clip_button') );
+		
+		      client.on( 'ready', function(event) {
+		        console.log( 'movie is loaded' );
+		
+		        client.on( 'copy', function(event) {
+		          event.clipboardData.setData('text/plain', event.target.innerHTML);
+		        } );
+		
+		        client.on( 'aftercopy', function(event) {
+		          console.log('Copied text to clipboard: ' + event.data['text/plain']);
+		        } );
+		      } );
+		
+		      client.on( 'error', function(event) {
+		        // console.log( 'ZeroClipboard error of type "' + event.name + '": ' + event.message );
+		        ZeroClipboard.destroy();
+		      } );
 			
 			function validateForm() {
 				// check for valid numbers
