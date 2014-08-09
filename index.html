@@ -16,8 +16,6 @@
 			} catch(e) {
 			}
 		</script>
-		<script type="text/javascript" src="js/service/Service.js"></script>
-		<script type="text/javascript" src="js/vo/ShortURL.js"></script>
 	</head>
 
 	<body lang="en">
@@ -43,10 +41,9 @@
 						<input type="tel" id="confID" placeholder="conf code #">
 						<br>
 						<br>
-						<button id="submitButton" class="inactive">
+						<button type="submit" id="submitButton" class="inactive">
 							GET MAGIC LINK
 						</button>
-
 					</div>
 					<div id="link-holder"></div>
 				</p>
@@ -73,7 +70,9 @@
 		<script>
 			window.jQuery || document.write('<script src="js/libs/jquery-1.11.1.min.js"><\/script>');
 		</script>
-		<script src="js/plugins.js"></script>
+		<script type="text/javascript" src="js/service/Service.js"></script>
+		<script type="text/javascript" src="js/vo/ShortURL.js"></script>
+		<script type="text/javascript" src="js/vo/ShortBitlyURL.js"></script>
 		<script src="js/script.js"></script>
 		<script src="js/libs/jquery.urlshortener.min.js"></script>
 		<script src="js/libs/detectmobilebrowser.js"></script>
@@ -120,17 +119,16 @@
 			var longURL;
 			var shortURL;
 			var isUrlInvalid;
+			var flashIsEnabled = true;
 
 			/*
 			 * Listener for the service
 			 */
 			$(service).on("shortURLDataSuccess", function(event, response) {
-				
-				
 				shortURL = response.data.url;
 				console.log('HTTP response, shortURL set: ' + shortURL);
 				
-				if (!$.browser.mobile) {
+				if (!$.browser.mobile && flashIsEnabled) {
 					// dont do anything
 				} else {
 					$('#link-holder').html('<div class="step" id="step3">Copy/paste this magic link so iPhoners can avoid pain.</div><h2><a href="' + shortURL + '">' + shortURL + '</a></h2>');
@@ -162,7 +160,18 @@
 
 				client.on('error', function(event) {
 					console.log('ZeroClipboard error of type "' + event.name + '": ' + event.message);
-					$('#link-holder').html('<div class="step" id="step3">Opps, something happened getting your magic link. Please try again.</div>');
+					if (event.name == 'flash-disabled')
+					{
+						flashIsEnabled = false;
+						$('#submitButton').click(function() {
+							validateForm();
+						});
+					}
+					else
+					{
+						$('#link-holder').html('<div class="step" id="step3">Opps, something happened getting your magic link. Please try again.</div>');
+					}
+					
 				});
 			}
 
@@ -182,18 +191,19 @@
 				var cidVal = cid.val();
 
 				if (cnVal.length != 7 && cnVal.length != 10 && cnVal.length != 11) {// ADD REGEX HERE
-					// cn.className = 'error';
+					console.log('addClass error cn');
 					cn.addClass('error');
 					error = true;
 				}
 				if (cidVal.length <= 1) {
-					// cid.className = 'error';
+					console.log('addClass error cid');
 					cid.addClass('error');
 					error = true;
 				}
 
 				if (error) {
 					setTimeout(function() {
+						console.log('remove error classes');
 						cn.removeClass('error');
 						cid.removeClass('error');
 					}, 2000);
@@ -230,7 +240,7 @@
 				}
 				longURL = httpBase + 'ccall_result.html?n=' + localConfPhoneNumber + '&i=' + localConfId + ((useHash) ? ('&useHash=true') : ('&useHash=false'));
 
-				service.getShortURL(longURL);
+				service.getBitlyShortURL(longURL);
 			}
 
 
@@ -244,6 +254,10 @@
 			
 			if (!$.browser.mobile) {
 				initClipboard();
+			} else {
+				$('#submitButton').click(function() {
+					validateForm();
+				});
 			}
 			
 

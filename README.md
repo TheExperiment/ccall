@@ -5,17 +5,14 @@ Ccall
 Solves the pain in the ass associated with conference numbers on mobile devices.
 
 
-###Use MAMP PRO to run locally.
----
+####Use MAMP PRO to run locally.
 Check the "via Xip.io (LAN only)" box to be able to connect a mobile phone locally.
 
-###Libs Info
----
-####Url Shortner
+####Libs Info
+#####Url Shortner
 https://github.com/hayageek/jQuery-URL-shortener
 	
-####ZeroClipboard
----
+#####ZeroClipboard
 https://github.com/zeroclipboard/zeroclipboard/blob/master/docs/instructions.md
 http://cdnjs.com/libraries/zeroclipboard
 

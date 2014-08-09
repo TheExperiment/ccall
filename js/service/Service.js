@@ -15,7 +15,7 @@ var Service = (function() {
 
 		return {
 			//POST to get the shortened URL from google url shortner
-			getShortURL : function(url) {
+			getGoogleShortURL : function(url) {
 				jQuery.urlShortener({
 					longUrl : url,
 					success : function(shortUrl) {
@@ -25,6 +25,22 @@ var Service = (function() {
 					error : function(err) {
 						alert(JSON.stringify(err));
 					}
+				});
+			},
+			getBitlyShortURL : function(url) {				
+				var accessToken = 'dd6b946298e9c97e03da6ba021c017cc106033f9';
+   				var url = 'https://api-ssl.bitly.com/v3/shorten?access_token=' + accessToken + '&longUrl=' + encodeURIComponent(url);
+				
+				$.ajax({
+				  dataType: "json",
+				  url: url,
+				  async: false,
+				  success: function(response)
+			        {
+			        	console.log(response);
+			        	var vo = new ShortBitlyURL(response);
+						triggerShortURLDataComplete(vo);
+			        }
 				});
 			}
 		};
