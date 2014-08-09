@@ -276,18 +276,6 @@ body {
 .hidden{
   display: none;
 }
-.clip_button {
-  .rounded(100px);
-  background: @highlightColor;
-  width: 100%;
-  margin-bottom: 20px;
-  .headline-font(1.1em);
-  letter-spacing: .1em;
-  color: @bgColor;
-
-}
-.clip_button.zeroclipboard-is-hover { background-color: @darkColor; }
-// .clip_button.zeroclipboard-is-active { background-color: #aaa; }
 
 .inactive{
   background: @darkColor;
@@ -429,6 +417,7 @@ a.active.trigger {
   text-decoration: none;
   border-bottom: 1px solid #ffffff;
 }
+
 button{
   .rounded(100px);
   background: @highlightColor;
@@ -441,6 +430,20 @@ button{
     background-color: @darkColor;
   }
 }
+
+
+#submitButton {
+  .rounded(100px);
+  width: 100%;
+  margin-bottom: 20px;
+  .headline-font(1.1em);
+  letter-spacing: .1em;
+}
+#submitButton.zeroclipboard-is-hover { background-color: @darkColor; }
+// #submitButton.zeroclipboard-is-active { background-color: #aaa; }
+
+
+
 #confID{
   margin-top: 2%;
 }

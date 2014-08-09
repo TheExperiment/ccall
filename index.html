@@ -35,7 +35,7 @@
 				<br>
 				</h1>
 				<p>
-					<form id="confForm" name="confForm" action="javascript:validateForm();">
+					<div id="confForm" name="confForm">
 						<div class="step">
 							We’ll combine the # and code into a single link for <b>iPhone*</b> users.
 						</div>
@@ -43,11 +43,11 @@
 						<input type="tel" id="confID" placeholder="conf code #">
 						<br>
 						<br>
-						<button type="submit" id="submitButton" class="inactive">
+						<button id="submitButton" class="inactive">
 							GET MAGIC LINK
 						</button>
 
-					</form>
+					</div>
 					<div id="link-holder"></div>
 				</p>
 				<article>
@@ -105,46 +105,58 @@
 			
 			function keyHandler(argument) {
 				if (cn.val().length >= 1 && cid.val().length >= 1) {
-					$('#link-holder').empty();
 					$('#submitButton').removeClass('inactive');
 				} else {
 					$('#submitButton').addClass('inactive');
+				}
+				if (cn.val().length >= 1 || cid.val().length >= 1) {
+					$('#link-holder').empty();
 				}
 			}
 
 			var service = Service.getInstance();
 			var scope = this;
 			var client;
-			var cbInit = false;
 			var longURL;
+			var shortURL;
+			var isUrlInvalid;
 
 			/*
 			 * Listener for the service
 			 */
 			$(service).on("shortURLDataSuccess", function(event, response) {
-				console.log(response.data);
-				//_trackEvent(category, action, opt_label, opt_value, opt_noninteraction)
-				// scope.ga.push(['_trackEvent', 'Url', 'Reveived', response.data]);
+				
+				
+				shortURL = response.data.url;
+				console.log('HTTP response, shortURL set: ' + shortURL);
+				
 				if (!$.browser.mobile) {
-					$('#link-holder').html('<div class="step" id="step3">Click this magic link so iPhoners can avoid pain.</div><button type="submit" id="submitButton" class="clip_button">' + response.data.url + ' - Click To Copy</button>');
-					if (!cbInit)
-						initClipboard(response.data.url);
+					// dont do anything
 				} else {
-					$('#link-holder').html('<div class="step" id="step3">Copy/paste this magic link so iPhoners can avoid pain.</div><h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
+					$('#link-holder').html('<div class="step" id="step3">Copy/paste this magic link so iPhoners can avoid pain.</div><h2><a href="' + shortURL + '">' + shortURL + '</a></h2>');
 				}
 			});
 
-			function initClipboard(url) {
-				client = new ZeroClipboard($('.clip_button'));
+			function initClipboard() {
+				
+				console.log('is Desktop - initClipboard()');
+				
+				client = new ZeroClipboard($('#submitButton'));
 				client.on('ready', function(event) {
 					// console.log('movie is loaded');
 					client.on('copy', function(event) {
-						event.clipboardData.setData('text/plain', url);
+						console.log('client.on(copy)');
+						isUrlInvalid = validateForm();
+						if (!isUrlInvalid) event.clipboardData.setData('text/plain', shortURL);
 					});
 					client.on('aftercopy', function(event) {
-						// console.log('Copied text to clipboard: ' + event.data['text/plain']);
-						$('#link-holder').html('<div class="step" id="step3">Your magic link has been copied to your clipboard. Now just Ctrl/V or Command/V(mac)</div>');
-						resetForm();
+						if (!isUrlInvalid) {
+							console.log('Copied text to clipboard: ' + event.data['text/plain']);
+							$('#link-holder').html('<div class="step" id="step3">Your magic link has been copied to your clipboard. Now just Ctrl/V or Command/V(mac)</div>');
+							resetForm();
+						} else {
+							console.log('form invalid, halting - client.on(aftercopy)');
+						}
 					});
 				});
 
@@ -152,42 +164,43 @@
 					console.log('ZeroClipboard error of type "' + event.name + '": ' + event.message);
 					$('#link-holder').html('<div class="step" id="step3">Opps, something happened getting your magic link. Please try again.</div>');
 				});
-				cbInit = true;
-
 			}
 
 			function resetForm() {
-				confForm.confID.value = '';
-				confForm.confNumber.value = '';
+				cn.val('');
+				cid.val('');
 				$('#submitButton').addClass('inactive');
-				ZeroClipboard.destroy();
-				cbInit = false;
 			}
 
 			function validateForm() {
+
+				console.log('validateForm()');
+				
 				// check for valid numbers
 				var error;
-				var cn = confForm.confNumber.value.replace(/\D/g, '');
-				var cd = confForm.confID.value;
+				var cnVal = cn.val().replace(/\D/g, '');
+				var cidVal = cid.val();
 
-				if (cn.length != 7 && cn.length != 10 && cn.length != 11) {// ADD REGEX HERE
-					confForm.confNumber.className = 'error';
+				if (cnVal.length != 7 && cnVal.length != 10 && cnVal.length != 11) {// ADD REGEX HERE
+					// cn.className = 'error';
+					cn.addClass('error');
 					error = true;
 				}
-				if (cd.length <= 1) {
-					confForm.confID.className = 'error';
+				if (cidVal.length <= 1) {
+					// cid.className = 'error';
+					cid.addClass('error');
 					error = true;
 				}
 
 				if (error) {
 					setTimeout(function() {
-						confForm.confID.className = '';
-						confForm.confNumber.className = '';
+						cn.removeClass('error');
+						cid.removeClass('error');
 					}, 2000);
-					return;
+					return true;
 				}
 				// check for missing #
-				if (cd.charAt(cd.length - 1) != '#') {
+				if (cidVal.charAt(cidVal.length - 1) != '#') {
 					var r = confirm("Cancel if you need to add a # to the end of your code.");
 					if (r == true) {
 						setLongURL();
@@ -201,14 +214,14 @@
 			function setLongURL() {
 
 				var httpBase = $(location).attr('href').substring(0, $(location).attr('href').lastIndexOf("/") + 1);
-
+				
 				// strip off # if one exists
-				var localConfId = confForm.confID.value;
-				var lastChar = localConfId.substr(confForm.confID.value.length - 1);
+				var localConfId = cid.val();
+				var lastChar = localConfId.substr(cid.val().length - 1);
 				var useHash = lastChar == '#';
 
 				// strip off all non-numerical characters from phone number
-				var localConfPhoneNumber = confForm.confNumber.value;
+				var localConfPhoneNumber = cn.val();
 				localConfPhoneNumber = localConfPhoneNumber.replace(/\D/g, '');
 
 				if (useHash)// strip it off
@@ -228,6 +241,11 @@
 			$('#cc-logo').hover(function() {
 				$(this).css('cursor', 'pointer');
 			});
+			
+			if (!$.browser.mobile) {
+				initClipboard();
+			}
+			
 
 		</script>
 
