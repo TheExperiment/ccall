@@ -31,34 +31,35 @@
 				</div>
 				<h1>Conference calls
 				<br>
-				without ass pain.<br></h1>
-				<h2>(iOS Only*)</h2>
+				without ass pain.
+				<br>
+				</h1>
 				<p>
-          <form id="confForm" name="confForm" action="javascript:validateForm();">
-            <div class="step">
-              Enter the phone and conference code # below.
-            </div>
-            <!--<input type='tel' pattern="[0-9]{10,10}" id="confNumber" placeholder="Phone #"  autocomplete="off"  maxlength="10" required>-->
-            <!--<input id="confNumber" type='tel' pattern='[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' placeholder='Phone #'>-->
-            <input type="tel" id="confNumber" placeholder="phone #">
-            <input type="tel" id="confID" placeholder="conf code #">
-            <br>
-            <br>
-            <button type="submit" id="submitButton" class="inactive">
-              GET MAGIC LINK
-            </button>
-            <div id="link-holder"></div>
-          </form>
+					<form id="confForm" name="confForm" action="javascript:validateForm();">
+						<div class="step">
+							We’ll combine the # and code into a single link for <b>iPhone*</b> users.
+						</div>
+						<input type="tel" id="confNumber" placeholder="phone #">
+						<input type="tel" id="confID" placeholder="conf code #">
+						<br>
+						<br>
+						<button type="submit" id="submitButton" class="inactive">
+							GET MAGIC LINK
+						</button>
+
+					</form>
+					<div id="link-holder"></div>
 				</p>
 				<article>
 					<b>We made CCALL because</b> it’s a pain in the ass to enter conference codes from a mobile phone. If you've ever had a calendar invite with a long conference ID and scribbled it on the back of your hand to avoid jumping between the email, your calendar and your phone app then you understand why we did this.
 					<br>
 					<br>
 					<div class="logo" id="experiment-logo">
-						<a href="http://theexperiment.io"><img src="img/logo_exp.svg"></a>
+						<a href="mailto:nickvelloff@theexperiment.io"><img src="img/logo_exp.svg"></a>
 					</div>
 					is a design and technology collective built to solve modern problems.
-					<br><br>
+					<br>
+					<br>
 					*Android still pain in ass.
 				</article>
 
@@ -76,8 +77,8 @@
 		<script src="js/script.js"></script>
 		<script src="js/libs/jquery.urlshortener.min.js"></script>
 		<script src="js/libs/detectmobilebrowser.js"></script>
-		<script src="js/libs/ZeroClipboard.min.js"></script>
-		
+		<script src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.5/ZeroClipboard.min.js"></script>
+
 		<script>
 			(function(i, s, o, g, r, a, m) {
 				i['GoogleAnalyticsObject'] = r;
@@ -91,24 +92,32 @@
 				m.parentNode.insertBefore(a, m);
 			})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-			ga('create', 'UA-45973655-2', 'experiment.bz');
+			ga('create', 'UA-45973655-2', 'ccall.me');
 			ga('send', 'pageview');
 		</script>
-		
-    <script>
-      $("#confID").bind('keyup',keyHandler);
-      function keyHandler (argument) {
-        if($(this).val().length >= 1){
-          $('#submitButton').removeClass('inactive');
-        }
-        
-      }
-    </script>
 
 		<script type="text/javascript">
 		
+			var cn = $("#confNumber");
+			var cid = $("#confID");
+			cn.bind('keyup', keyHandler);
+			cid.bind('keyup', keyHandler);
+			
+			function keyHandler(argument) {
+				if (cn.val().length >= 1 && cid.val().length >= 1) {
+					$('#link-holder').empty();
+					$('#submitButton').removeClass('inactive');
+				} else {
+					$('#submitButton').addClass('inactive');
+				}
+			}
+
 			var service = Service.getInstance();
 			var scope = this;
+			var client;
+			var cbInit = false;
+			var longURL;
+
 			/*
 			 * Listener for the service
 			 */
@@ -117,48 +126,58 @@
 				//_trackEvent(category, action, opt_label, opt_value, opt_noninteraction)
 				// scope.ga.push(['_trackEvent', 'Url', 'Reveived', response.data]);
 				if (!$.browser.mobile) {
-					console.log('add copy/paste');
-					
+					$('#link-holder').html('<div class="step" id="step3">Click this magic link so iPhoners can avoid pain.</div><button type="submit" id="submitButton" class="clip_button">' + response.data.url + ' - Click To Copy</button>');
+					if (!cbInit)
+						initClipboard(response.data.url);
+				} else {
+					$('#link-holder').html('<div class="step" id="step3">Copy/paste this magic link so iPhoners can avoid pain.</div><h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
 				}
-				
-				$('#link-holder').html('<div class="step" id="step3">Copy/paste this magic link so iPhoners can avoid pain.</div><h2><a href="' + response.data.url + '">' + response.data.url + '</a></h2>');
 			});
-				
-			
-		      var client = new ZeroClipboard( $('.clip_button') );
-		
-		      client.on( 'ready', function(event) {
-		        console.log( 'movie is loaded' );
-		
-		        client.on( 'copy', function(event) {
-		          event.clipboardData.setData('text/plain', event.target.innerHTML);
-		        } );
-		
-		        client.on( 'aftercopy', function(event) {
-		          console.log('Copied text to clipboard: ' + event.data['text/plain']);
-		        } );
-		      } );
-		
-		      client.on( 'error', function(event) {
-		        // console.log( 'ZeroClipboard error of type "' + event.name + '": ' + event.message );
-		        ZeroClipboard.destroy();
-		      } );
-			
+
+			function initClipboard(url) {
+				client = new ZeroClipboard($('.clip_button'));
+				client.on('ready', function(event) {
+					// console.log('movie is loaded');
+					client.on('copy', function(event) {
+						event.clipboardData.setData('text/plain', url);
+					});
+					client.on('aftercopy', function(event) {
+						// console.log('Copied text to clipboard: ' + event.data['text/plain']);
+						$('#link-holder').html('<div class="step" id="step3">Your magic link has been copied to your clipboard. Now just Ctrl/V or Command/V(mac)</div>');
+						resetForm();
+					});
+				});
+
+				client.on('error', function(event) {
+					console.log('ZeroClipboard error of type "' + event.name + '": ' + event.message);
+					$('#link-holder').html('<div class="step" id="step3">Opps, something happened getting your magic link. Please try again.</div>');
+				});
+				cbInit = true;
+
+			}
+
+			function resetForm() {
+				confForm.confID.value = '';
+				confForm.confNumber.value = '';
+				$('#submitButton').addClass('inactive');
+				ZeroClipboard.destroy();
+				cbInit = false;
+			}
+
 			function validateForm() {
 				// check for valid numbers
 				var error;
 				var cn = confForm.confNumber.value.replace(/\D/g, '');
 				var cd = confForm.confID.value;
 
-				if (cn.length != 7 && cn.length != 10 && cn.length != 11) {
+				if (cn.length != 7 && cn.length != 10 && cn.length != 11) {// ADD REGEX HERE
 					confForm.confNumber.className = 'error';
 					error = true;
 				}
-				if (cd.length < 2) {
+				if (cd.length <= 1) {
 					confForm.confID.className = 'error';
 					error = true;
 				}
-				
 
 				if (error) {
 					setTimeout(function() {
@@ -171,47 +190,45 @@
 				if (cd.charAt(cd.length - 1) != '#') {
 					var r = confirm("Cancel if you need to add a # to the end of your code.");
 					if (r == true) {
-						// createICS();
-						addMagicURL();
+						setLongURL();
 					}
 
 				} else {
-					// createICS();
-					addMagicURL();
+					setLongURL();
 				}
-
 			}
-			
-			function addMagicURL() {
+
+			function setLongURL() {
+
 				var httpBase = $(location).attr('href').substring(0, $(location).attr('href').lastIndexOf("/") + 1);
 
 				// strip off # if one exists
 				var localConfId = confForm.confID.value;
 				var lastChar = localConfId.substr(confForm.confID.value.length - 1);
 				var useHash = lastChar == '#';
-				
+
 				// strip off all non-numerical characters from phone number
 				var localConfPhoneNumber = confForm.confNumber.value;
 				localConfPhoneNumber = localConfPhoneNumber.replace(/\D/g, '');
-				
+
 				if (useHash)// strip it off
 				{
 					localConfId = localConfId.substring(0, localConfId.length - 1);
 				}
-				var callURL = httpBase + 'ccall_result.html?n=' + localConfPhoneNumber + '&i=' + localConfId + ((useHash) ? ('&useHash=true') : ('&useHash=false'));
-				
-				// console.log(callURL);
-				service.getShortURL(callURL);
+				longURL = httpBase + 'ccall_result.html?n=' + localConfPhoneNumber + '&i=' + localConfId + ((useHash) ? ('&useHash=true') : ('&useHash=false'));
+
+				service.getShortURL(longURL);
 			}
-			
+
+
 			$('#cc-logo').click(function() {
 				var httpBase = $(location).attr('href').substring(0, $(location).attr('href').lastIndexOf("/") + 1);
 				window.location = httpBase;
 			});
 			$('#cc-logo').hover(function() {
-		        $(this).css('cursor','pointer');
-		    });
-			
+				$(this).css('cursor', 'pointer');
+			});
+
 		</script>
 
 	</body>

@@ -276,10 +276,23 @@ body {
 .hidden{
   display: none;
 }
-.inactive{
-  background: #000;
+.clip_button {
+  .rounded(100px);
+  background: @highlightColor;
+  width: 100%;
+  margin-bottom: 20px;
+  .headline-font(1.1em);
+  letter-spacing: .1em;
   color: @bgColor;
-  opacity: .2;
+
+}
+.clip_button.zeroclipboard-is-hover { background-color: @darkColor; }
+// .clip_button.zeroclipboard-is-active { background-color: #aaa; }
+
+.inactive{
+  background: @darkColor;
+  color: @bgColor;
+  opacity: .3;
   pointer-events: none; 
 }
 #container {
