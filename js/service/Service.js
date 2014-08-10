@@ -34,11 +34,13 @@ var Service = (function() {
 
 				var accessToken = 'dd6b946298e9c97e03da6ba021c017cc106033f9';
 				var url = 'https://api-ssl.bitly.com/v3/shorten?access_token=' + accessToken + '&longUrl=' + encodeURIComponent(url);
-				$.support.cors = true;
+
+				// $.support.cors = true;
 				jqxhr = $.ajax({
 					dataType : "json",
 					url : url,
 					async : false,
+					crossDomain: true,
 					success : function(response) {
 						console.log('success' + response.data.url);
 						var vo = new ShortBitlyURL(response);
