@@ -2,10 +2,11 @@ var Service = (function() {
 
 	// Instance stores a reference to the Singleton
 	var serviceInstance;
-
+	var jqxhr;
+	
 	function init() {
 
-		jQuery.urlShortener.settings.apiKey = 'AIzaSyCZJB8FLx9dguZ3sngkRm0IHArYhUJQ-bY';
+		// jQuery.urlShortener.settings.apiKey = 'AIzaSyCZJB8FLx9dguZ3sngkRm0IHArYhUJQ-bY';
 
 		function triggerShortURLDataComplete(newData) {
 			$(serviceInstance).trigger("shortURLDataSuccess", {
@@ -27,20 +28,31 @@ var Service = (function() {
 					}
 				});
 			},
-			getBitlyShortURL : function(url) {				
+			getBitlyShortURL : function(url) {
+
+				console.log('getBitlyShortURL()');
+
 				var accessToken = 'dd6b946298e9c97e03da6ba021c017cc106033f9';
-   				var url = 'https://api-ssl.bitly.com/v3/shorten?access_token=' + accessToken + '&longUrl=' + encodeURIComponent(url);
-				
-				$.ajax({
-				  dataType: "json",
-				  url: url,
-				  async: false,
-				  success: function(response)
-			        {
-			        	console.log(response);
-			        	var vo = new ShortBitlyURL(response);
+				var url = 'https://api-ssl.bitly.com/v3/shorten?access_token=' + accessToken + '&longUrl=' + encodeURIComponent(url);
+				$.support.cors = true;
+				jqxhr = $.ajax({
+					dataType : "json",
+					url : url,
+					async : false,
+					success : function(response) {
+						console.log('success' + response.data.url);
+						var vo = new ShortBitlyURL(response);
 						triggerShortURLDataComplete(vo);
-			        }
+					},
+					error : function(response) {
+						console.log('error');
+						for (key in response) {
+							console.log(key + ': ' + response[key]);
+						}
+					},
+					complete : function(response) {
+						console.log('complete');
+					}
 				});
 			}
 		};
