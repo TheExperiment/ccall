@@ -80,23 +80,16 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js"></script>
 		
 		
-		<script>
-			(function(i, s, o, g, r, a, m) {
-				i['GoogleAnalyticsObject'] = r;
-				i[r] = i[r] ||
-				function() {
-					(i[r].q = i[r].q || []).push(arguments);
-				}, i[r].l = 1 * new Date();
-				a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-				a.async = 1;
-				a.src = g;
-				m.parentNode.insertBefore(a, m);
-			})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-			ga('create', 'UA-45973655-2', 'ccall.me');
-			ga('send', 'pageview');
-		</script>
-		
+  ga('create', 'UA-45973655-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
 		
 		<script type="text/javascript">
 		
@@ -154,7 +147,7 @@
 					client.on('aftercopy', function(event) {
 						if (!isUrlInvalid) {
 							console.log('Copied text to clipboard: ' + event.data['text/plain']);
-							$('#link-holder').html('<div class="step" id="step3">Your magic link has been copied to your clipboard. Now just Ctrl/V or Command/V(mac)</div>');
+							$('#link-holder').html('<div class="step" id="step3"> <a href="' + shortURL + '">'  + shortURL + ' </a> <br>Your magic link has been copied to your clipboard. Now just Ctrl+V or Command+V(mac)</div>');
 							resetForm();
 							ga('send', 'event', 'api', 'receive', 'shorturl');
 						} else {
