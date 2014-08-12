@@ -10,7 +10,8 @@ Check the "via Xip.io (LAN only)" box to be able to connect a mobile phone local
 
 ####Libs Info
 #####Url Shortner
-https://github.com/hayageek/jQuery-URL-shortener
+Now uses bit.ly api directly. Soon to roll own shortner.
+https://github.com/hayageek/jQuery-URL-shortener (available but not used)
 	
 #####ZeroClipboard
 https://github.com/zeroclipboard/zeroclipboard/blob/master/docs/instructions.md
