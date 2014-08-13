@@ -122,7 +122,7 @@
 			 */
 			$(service).on("shortURLDataSuccess", function(event, response) {
 				shortURL = response.data.url;
-				console.log('HTTP response, shortURL set: ' + shortURL);
+				// console.log('HTTP response, shortURL set: ' + shortURL);
 				
 				if (!$.browser.mobile && flashIsEnabled) {
 					// dont do anything
@@ -134,30 +134,30 @@
 
 			function initClipboard() {
 				
-				console.log('is Desktop - initClipboard()');
+				// console.log('is Desktop - initClipboard()');
 				
 				client = new ZeroClipboard($('#submitButton'));
 				client.on('ready', function(event) {
 					// console.log('movie is loaded');
 					client.on('copy', function(event) {
-						console.log('client.on(copy)');
+						// console.log('client.on(copy)');
 						isUrlInvalid = validateForm();
 						if (!isUrlInvalid) event.clipboardData.setData('text/plain', shortURL);
 					});
 					client.on('aftercopy', function(event) {
 						if (!isUrlInvalid) {
-							console.log('Copied text to clipboard: ' + event.data['text/plain']);
+							// console.log('Copied text to clipboard: ' + event.data['text/plain']);
 							$('#link-holder').html('<div class="step" id="step3"> <a href="' + shortURL + '">'  + shortURL + ' </a> <br>Your magic link has been copied to your clipboard. Now just Ctrl+V or Command+V(mac)</div>');
 							resetForm();
 							ga('send', 'event', 'api', 'receive', 'shorturl');
 						} else {
-							console.log('form invalid, halting - client.on(aftercopy)');
+							// console.log('form invalid, halting - client.on(aftercopy)');
 						}
 					});
 				});
 
 				client.on('error', function(event) {
-					console.log('ZeroClipboard error of type "' + event.name + '": ' + event.message);
+					// console.log('ZeroClipboard error of type "' + event.name + '": ' + event.message);
 					if (event.name == 'flash-disabled')
 					{
 						flashIsEnabled = false;
@@ -181,7 +181,7 @@
 
 			function validateForm() {
 
-				console.log('validateForm()');
+				// console.log('validateForm()');
 				
 				// check for valid numbers
 				var error;
@@ -189,19 +189,19 @@
 				var cidVal = cid.val();
 
 				if (cnVal.length != 7 && cnVal.length != 10 && cnVal.length != 11) {// ADD REGEX HERE
-					console.log('addClass error cn');
+					// console.log('addClass error cn');
 					cn.addClass('error');
 					error = true;
 				}
 				if (cidVal.length <= 1) {
-					console.log('addClass error cid');
+					// console.log('addClass error cid');
 					cid.addClass('error');
 					error = true;
 				}
 
 				if (error) {
 					setTimeout(function() {
-						console.log('remove error classes');
+						// console.log('remove error classes');
 						cn.removeClass('error');
 						cid.removeClass('error');
 					}, 2000);
@@ -221,7 +221,7 @@
 
 			function setLongURL() {
 				
-				console.log('setLongURL()');
+				// console.log('setLongURL()');
 				
 				var httpBase = $(location).attr('href').substring(0, $(location).attr('href').lastIndexOf("/") + 1);
 				

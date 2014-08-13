@@ -30,7 +30,7 @@ var Service = (function() {
 			},
 			getBitlyShortURL : function(url) {
 
-				console.log('getBitlyShortURL()');
+				// console.log('getBitlyShortURL()');
 
 				var accessToken = 'dd6b946298e9c97e03da6ba021c017cc106033f9';
 				var url = 'https://api-ssl.bitly.com/v3/shorten?access_token=' + accessToken + '&longUrl=' + encodeURIComponent(url);
@@ -42,18 +42,18 @@ var Service = (function() {
 					async : false,
 					crossDomain: true,
 					success : function(response) {
-						console.log('success' + response.data.url);
+						// console.log('success' + response.data.url);
 						var vo = new ShortBitlyURL(response);
 						triggerShortURLDataComplete(vo);
 					},
 					error : function(response) {
-						console.log('error');
+						// console.log('error');
 						for (key in response) {
-							console.log(key + ': ' + response[key]);
+							// console.log(key + ': ' + response[key]);
 						}
 					},
 					complete : function(response) {
-						console.log('complete');
+						// console.log('complete');
 					}
 				});
 			}
