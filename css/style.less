@@ -80,6 +80,7 @@ article{
   position: relative;
   padding: 40px 20% 20% 0%;
   margin-top: 50px;
+  margin-bottom: 120px;
   border-top: 2px solid @darkColor;
 }
 html {
@@ -173,6 +174,7 @@ textarea {overflow: auto;}
 
 a, a:active, a:visited{
   color: @highlightColor;
+  text-decoration: none;
 }
 a:hover{
   color: @darkColor;
@@ -271,6 +273,7 @@ body {
   background: @bgColor;
   color: @darkColor;
   .box-sizing;
+  -webkit-font-smoothing: antialiased;
   }
   
 .hidden{
@@ -328,6 +331,35 @@ p {
 
 #footer {
     padding-top: 40/@em;  
+}
+.social{
+  .box-sizing;
+  text-align: center;
+  padding: 19px;
+  opacity: .9;
+  .social-cat {
+    position: relative;
+    width: 33%;
+    float: left;
+    img{
+      position: relative;
+      margin: 7px 10px;
+    }
+    a:hover{
+      opacity: .7;
+    }
+  }
+  .social-head{
+    font-family: 'futura-pt', 'Futura bold', 'Helvetica Neue', 'Helvetica', sans-serif;
+    letter-spacing: .2em;
+    font-size: .7em;
+    color: @bgColor;
+  }
+  width: 100%;
+  bottom: 0;
+  height: 117px;
+  background: @darkColor;
+  position: fixed;
 }
 a.trigger {
   position: absolute;
