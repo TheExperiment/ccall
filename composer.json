@@ -1,6 +1,6 @@
 {
   "require": {
-    "php": "~5.5.12",
+    "php": "~5.5.15",
     "monolog/monolog": "~1.10.0"
   }
 }
