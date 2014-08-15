@@ -6,8 +6,6 @@ var Service = (function() {
 	
 	function init() {
 
-		// jQuery.urlShortener.settings.apiKey = 'AIzaSyCZJB8FLx9dguZ3sngkRm0IHArYhUJQ-bY';
-
 		function triggerShortURLDataComplete(newData) {
 			$(serviceInstance).trigger("shortURLDataSuccess", {
 				data : newData
@@ -28,6 +26,33 @@ var Service = (function() {
 					}
 				});
 			},
+			
+			getCcallShortURL : function(url) {
+				var accessToken = '5d92553616';
+				var url = '/y/yourls-api.php?signature=' + accessToken + '&action=shorturl&format=jsonp&url=' + encodeURIComponent(url);
+
+				// $.support.cors = true;
+				jqxhr = $.ajax({
+					dataType : "jsonp",
+					url : url,
+					async : false,
+					success : function(response) {
+						console.log(response);
+						var vo = new ShortCcallURL(response);
+						triggerShortURLDataComplete(vo);
+					},
+					error : function(response) {
+						console.log('error');
+						for (key in response) {
+							console.log(key + ': ' + response[key]);
+						}
+					},
+					complete : function(response) {
+						console.log('complete');
+					}
+				});
+			},
+			
 			getBitlyShortURL : function(url) {
 
 				// console.log('getBitlyShortURL()');

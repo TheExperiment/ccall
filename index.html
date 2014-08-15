@@ -84,13 +84,13 @@
 			window.jQuery || document.write('<script src="js/libs/jquery-1.11.1.min.js"><\/script>');
 		</script>
 		<script type="text/javascript" src="js/service/Service.js"></script>
-		<script type="text/javascript" src="js/vo/ShortURL.js"></script>
-		<script type="text/javascript" src="js/vo/ShortBitlyURL.js"></script>
-		<script src="js/script.js"></script>
+		<script type="text/javascript" src="js/vo/ShortCcallURL.js"></script>
+		<!-- <script type="text/javascript" src="js/vo/ShortURL.js"></script> -->
+		<!-- <script type="text/javascript" src="js/vo/ShortBitlyURL.js"></script> -->
 		<!-- <script src="js/libs/jquery.urlshortener.min.js"></script> -->
 		<script src="js/libs/detectmobilebrowser.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.5/ZeroClipboard.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js"></script>
+		<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js"></script> -->
 		
 		
 <script>
@@ -134,6 +134,7 @@
 			 * Listener for the service
 			 */
 			$(service).on("shortURLDataSuccess", function(event, response) {
+				
 				shortURL = response.data.url;
 				// console.log('HTTP response, shortURL set: ' + shortURL);
 				
@@ -253,7 +254,7 @@
 				}
 				longURL = httpBase + 'ccall_result.html?n=' + localConfPhoneNumber + '&i=' + localConfId + ((useHash) ? ('&useHash=true') : ('&useHash=false'));
 
-				service.getBitlyShortURL(longURL);
+				service.getCcallShortURL(longURL);
 			}
 
 
