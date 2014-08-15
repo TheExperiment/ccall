@@ -1,6 +1,9 @@
 {
-  "require": {
-    "php": "~5.5.15",
-    "monolog/monolog": "~1.10.0"
-  }
+	"name": "theexperiment/ccall",
+	"description": "utility",
+	"license": "MIT",
+	"require": {
+		"php": "~5.5.15",
+		"monolog/monolog": "~1.10.0"
+	}
 }
