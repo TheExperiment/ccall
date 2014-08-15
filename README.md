@@ -21,3 +21,7 @@ http://cdnjs.com/libraries/zeroclipboard
 Cross-Domain AJAX for IE8 + IE9
 https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest
 https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git
+
+##### Submodule
+cd ccall/y
+git submodule update --init
