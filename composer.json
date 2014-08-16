@@ -5,5 +5,8 @@
 	"require": {
 		"php": "~5.5.15",
 		"monolog/monolog": "~1.10.0"
+	},
+	"require-dev": {
+		"heroku/heroku-buildpack-php": "*"
 	}
 }
