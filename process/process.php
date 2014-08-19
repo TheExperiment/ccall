@@ -7,10 +7,10 @@ use Monolog\Handler\StreamHandler;
 
 // create a log channel to STDERR
 $log = new Logger('ccall process handler');
-$log->pushHandler(new StreamHandler('php://stderr', Logger::WARNING));
+$log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
 
 // add records to the log
-$log->addWarning("Received.");
+$log->addInfo($_POST);
 
 /*
 $json = '{"foo-bar": 12345}';
