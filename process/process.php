@@ -11,7 +11,7 @@ $log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
 
 // add records to the log
 $arr = get_defined_vars();
-$log->addInfo(print_r($arr));
+$log->addInfo($arr);
 
 /*
 $json = '{"foo-bar": 12345}';
