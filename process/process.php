@@ -1,6 +1,7 @@
 <?php
 
 require('../vendor/autoload.php');
+require("../libs/postmark.php");
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -14,15 +15,18 @@ $inbound = new \Postmark\Inbound(file_get_contents('php://input'));
 $log->addInfo( 'Email received with subject: ' . $inbound->Subject() );
 
 // Response
-$transport = Swift_PostmarkTransport::newInstance( getenv('POSTMARK_API_KEY') );
+$postmark = new Postmark( getenv('POSTMARK_API_KEY'), "bot@ccall.me" );
 
-$mailer = Swift_Mailer::newInstance($transport);
-$message = Swift_Message::newInstance();
+$result = $postmark	->to( $inbound->From() )
+					->subject( $inbound->Subject() )
+					->plain_message("This is a plain text message.")
+					->send();
 
-// Add stuff to your message
-// $message->setFrom('test@example.com');
-$message->setTo( $inbound->FromEmail() );
-$message->setSubject( $inbound->Subject() );
-$message->setBody('My Reply');
+if($result === true) {
+	$log->addInfo( 'Response Sent' );
+} else {
+	$log->addWarning( 'Response Failed to send: ' . $result);
+}
 
-$mailer->send($message);
+//->attachment('File.pdf', $file_as_string, 'application/pdf')
+	

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d71e8cee603762106b3347012427c0d9",
+    "hash": "f8bdd817938d227a3886f3da0f8e00f7",
     "packages": [
         {
             "name": "jjaffeux/postmark-inbound-php",
@@ -120,46 +120,6 @@
             "time": "2014-06-04 16:30:04"
         },
         {
-            "name": "openbuildings/postmark",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/OpenBuildings/postmark.git",
-                "reference": "78efd7ff91c127b481bdd1e867d54122b4618d36"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/OpenBuildings/postmark/zipball/78efd7ff91c127b481bdd1e867d54122b4618d36",
-                "reference": "78efd7ff91c127b481bdd1e867d54122b4618d36",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "swiftmailer/swiftmailer": "~5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Openbuildings\\Postmark\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Ivan Kerin",
-                    "email": "ivan@openbuildings.com",
-                    "role": "Author"
-                }
-            ],
-            "description": "Swiftmailer Transport Class for Postmark",
-            "time": "2014-07-23 09:48:50"
-        },
-        {
             "name": "psr/log",
             "version": "1.0.0",
             "source": {
@@ -246,9 +206,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "openbuildings/postmark": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "platform": {
         "php": "~5.5.15"
