@@ -35,6 +35,7 @@ $log->addInfo( 'detectedNumbers: ' . $detectedNumbers );
 // $inbound->HtmlBody();
 
 // Response
+
 $postmark = new Postmark( getenv('POSTMARK_API_KEY'), "pam@ccall.me" );
 
 $result = $postmark	->to( $inbound->FromEmail() )
@@ -48,5 +49,4 @@ if($result === true) {
 	$log->addWarning( 'Response Failed to send: ' . $result);
 }
 
-//->attachment('File.pdf', $file_as_string, 'application/pdf')
-	
+?>	
