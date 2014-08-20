@@ -29,7 +29,7 @@ preg_match_all($re, $str, $matches);
 
 $matchesList = '';
 for ($i=0; $i < count($matches); $i++) {
-	$matchesList += $matches + '\n';
+	$matchesList += $matches . '\n';
 }
 
 $log->addInfo( 'detectedNumbers: ' . $matchesList);
