@@ -10,13 +10,7 @@ $log = new Logger('ccall process handler');
 $log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
 
 // add records to the log
-$arr = $_POST;
-$log->addInfo($arr);
-
-/*
-$json = '{"foo-bar": 12345}';
-
+$json = file_get_contents('php://input');
 $obj = json_decode($json);
-print $obj->{'foo-bar'}; // 12345
-*/
-?>
+
+$log->addInfo($obj);
