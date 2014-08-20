@@ -28,7 +28,7 @@ $str = $inbound -> TextBody();
 preg_match_all($re, $str, $matches);
 
 
-$log -> addInfo( '>>>> : ' . print_r($array,1) );
+$log -> addInfo( '>>>> : ' . print_r($matches,1) );
 
 /*
 $matchesList = '';
