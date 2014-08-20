@@ -8,7 +8,7 @@ use Monolog\Handler\StreamHandler;
 
 // create a log channel to STDERR
 $log = new Logger('ccall process handler');
-$log -> pushHandler(new StreamHandler('php://stderr', Logger::INFO));
+$log -> pushHandler(new StreamHandler('php://stderr', Logger::ERROR));
 
 $inbound = new \Postmark\Inbound(file_get_contents('php://input'));
 
@@ -27,6 +27,10 @@ $str = $inbound -> TextBody();
 
 preg_match_all($re, $str, $matches);
 
+
+$log -> addInfo( '>>>> : ' . print_r($array,1) );
+
+/*
 $matchesList = '';
 $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($matches)); 
 foreach($iterator as $key=>$value)
@@ -48,4 +52,6 @@ if ($result === true) {
 } else {
 	$log -> addWarning('Response Failed to send: ' . $result);
 }
+
+*/
 ?>
