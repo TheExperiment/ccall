@@ -27,18 +27,19 @@ $str = $inbound->TextBody();
  
 preg_match_all($re, $str, $matches);
 
-$log->addInfo( 'detectedNumbers: ' . var_dump($matches) );
+$matchesList = '';
+for ($i=0; $i < count($matches); $i++) {
+	$matchesList += $matches + '\n';
+}
 
-// $inbound->TextBody();
-// $inbound->HtmlBody();
+$log->addInfo( 'detectedNumbers: ' . $matchesList);
 
 // Response
-
 $postmark = new Postmark( getenv('POSTMARK_API_KEY'), "pam@ccall.me" );
 
 $result = $postmark	->to( $inbound->FromEmail() )
 					->subject( $inbound->Subject() )
-					->plain_message( var_dump($matches) )
+					->plain_message( $matchesList )
 					->send();
 
 if($result === true) {
