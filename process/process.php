@@ -24,11 +24,10 @@ $log->addInfo( 'Body html content: ' . $inbound->HtmlBody() );
 
 $re = "/(\\+?(?:(?:9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)|\\((?:9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\\))[0-9. -]{4,14})(?:\\b|x\\d+)/mi";  
 $str = $inbound->TextBody(); 
-$subst = '$1'; 
  
-$detectedNumbers = preg_replace($re, $subst, $str);
+preg_match_all($re, $str, $matches);
 
-$log->addInfo( 'detectedNumbers: ' . $detectedNumbers );
+$log->addInfo( 'detectedNumbers: ' . $matches );
 
 // $inbound->TextBody();
 // $inbound->HtmlBody();
@@ -39,11 +38,11 @@ $postmark = new Postmark( getenv('POSTMARK_API_KEY'), "pam@ccall.me" );
 
 $result = $postmark	->to( $inbound->FromEmail() )
 					->subject( $inbound->Subject() )
-					->plain_message($detectedNumbers)
+					->plain_message( $matches )
 					->send();
 
 if($result === true) {
-	$log->addInfo( 'Response Sent, detected numbers in body: ' + $detectedNumbers);
+	$log->addInfo( 'Response Sent, detected numbers in body: ' + $matches);
 } else {
 	$log->addWarning( 'Response Failed to send: ' . $result);
 }
