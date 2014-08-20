@@ -13,4 +13,4 @@ $log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
 $json = file_get_contents('php://input');
 $obj = json_decode($json);
 
-$log->addInfo($obj);
+$log->addInfo($json);
