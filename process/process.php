@@ -28,7 +28,7 @@ $str = $inbound -> TextBody();
 preg_match_all($re, $str, $matches);
 
 $matchesList = '';
-$iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($array)); 
+$iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($matches)); 
 foreach($iterator as $key=>$value)
 {
    if($value!=='')
