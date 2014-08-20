@@ -4,7 +4,9 @@
 	"license": "MIT",
 	"require": {
 		"php": "~5.5.15",
-		"monolog/monolog": "~1.10.0"
+		"monolog/monolog": "~1.10.0",
+		"jjaffeux/postmark-inbound-php": ">=2.0",
+		"openbuildings/postmark": "dev-master"
 	},
 	"require-dev": {
 		"heroku/heroku-buildpack-php": "*"

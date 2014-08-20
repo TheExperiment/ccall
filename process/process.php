@@ -9,8 +9,6 @@ use Monolog\Handler\StreamHandler;
 $log = new Logger('ccall process handler');
 $log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
 
-// add records to the log
-$json = file_get_contents('php://input');
-$obj = json_decode($json);
+$inbound = new \Postmark\Inbound(file_get_contents('php://input'));
 
-$log->addInfo($json);
+$log->addInfo( 'Email received with subject: ' . $inbound->Subject() );
