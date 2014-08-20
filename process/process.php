@@ -29,10 +29,9 @@ preg_match_all($re, $str, $matches);
 
 $matchesList = '';
 for ($i=0; $i < count($matches); $i++) {
-	$matchesList += $matches . '\n';
+	$log->addInfo( 'detected number: ' . $matches[$i]);
+	$matchesList += $matches[$i] . '\n';
 }
-
-$log->addInfo( 'detectedNumbers: ' . $matchesList);
 
 // Response
 $postmark = new Postmark( getenv('POSTMARK_API_KEY'), "pam@ccall.me" );
