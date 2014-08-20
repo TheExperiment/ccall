@@ -28,14 +28,15 @@ $str = $inbound -> TextBody();
 preg_match_all($re, $str, $matches);
 
 $matchesList = '';
-function add_item($item, $key) {
-	if (!is_object($item))
-		return;
-	$log -> addInfo('detected item: ' . $item);
-	$matchesList += $item . '\n';
+$iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($array)); 
+foreach($iterator as $key=>$value)
+{
+   if($value!=='')
+   {
+      	$log -> addInfo('detected item: ' . $value);
+		$matchesList += $value . '\n';
+   }
 }
-
-array_walk_recursive($matches, 'add_item');
 
 // Response
 $postmark = new Postmark(getenv('POSTMARK_API_KEY'), "pam@ccall.me");
