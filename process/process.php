@@ -27,7 +27,7 @@ $str = $inbound->TextBody();
  
 preg_match_all($re, $str, $matches);
 
-$log->addInfo( 'detectedNumbers: ' . $matches );
+$log->addInfo( 'detectedNumbers: ' . var_dump($matches) );
 
 // $inbound->TextBody();
 // $inbound->HtmlBody();
@@ -38,11 +38,11 @@ $postmark = new Postmark( getenv('POSTMARK_API_KEY'), "pam@ccall.me" );
 
 $result = $postmark	->to( $inbound->FromEmail() )
 					->subject( $inbound->Subject() )
-					->plain_message( $matches )
+					->plain_message( var_dump($matches) )
 					->send();
 
 if($result === true) {
-	$log->addInfo( 'Response Sent, detected numbers in body: ' + $matches);
+	$log->addInfo( 'Response Sent' );
 } else {
 	$log->addWarning( 'Response Failed to send: ' . $result);
 }
