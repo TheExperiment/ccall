@@ -28,10 +28,13 @@ $str = $inbound->TextBody();
 preg_match_all($re, $str, $matches);
 
 $matchesList = '';
-for ($i=0; $i < count($matches); $i++) {
-	$log->addInfo( 'detected number: ' . $matches[$i]);
-	$matchesList += $matches[$i] . '\n';
+function add_item($item, $key)
+{
+    $log->addInfo( 'detected item: ' . $item);
+	$matchesList += $item . '\n';
 }
+
+array_walk_recursive($matches, 'add_item');
 
 // Response
 $postmark = new Postmark( getenv('POSTMARK_API_KEY'), "pam@ccall.me" );
