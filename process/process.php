@@ -30,7 +30,7 @@ preg_match_all($re, $str, $matches);
 $matchesList = '';
 function add_item($item, $key) {
 	if (!isset($item))
-		continue;
+		return;
 	$log -> addInfo('detected item: ' . $item);
 	$matchesList += $item . '\n';
 }
