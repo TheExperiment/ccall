@@ -12,6 +12,8 @@ $log -> pushHandler(new StreamHandler('php://stderr', Logger::INFO));
 
 $inbound = new \Postmark\Inbound(file_get_contents('php://input'));
 
+echo "HELLO";
+
 /* Waiting until To is available
  if ($inbound->To() != 'pam@ccall.me') {
  exit(1);
