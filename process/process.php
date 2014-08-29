@@ -13,7 +13,7 @@ $log -> pushHandler(new StreamHandler('php://stderr', Logger::INFO));
 $inbound = new \Postmark\Inbound(file_get_contents('php://input'));
 
 echo "HELLO";
-
+echo $inbound->Json;
 /* Waiting until To is available
  if ($inbound->To() != 'pam@ccall.me') {
  exit(1);
@@ -30,8 +30,8 @@ $str = $inbound -> TextBody();
 // preg_match_all($re, $str, $matches);
 
 $log -> addInfo('Before content: ' . $str);
-$matches = preg_replace($re, '~', $str);
-$log -> addInfo('After content: ' . $str);
+$resultString = preg_replace($re, '~', $str);
+$log -> addInfo('After content: ' . $resultString);
 
 $log -> addInfo( 'matches>>> : ' . print_r($matches,1) );
 
