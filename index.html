@@ -198,7 +198,7 @@
 				// console.log('validateForm()');
 				
 				// check for valid numbers
-				var error;
+				var error = false;
 				var cnVal = cn.val().replace(/\D/g, '');
 				var cidVal = cid.val();
 
@@ -226,6 +226,8 @@
 					var r = confirm("Cancel if you need to add a # to the end of your code.");
 					if (r == true) {
 						setLongURL();
+					} else {
+						return true;
 					}
 
 				} else {
@@ -235,7 +237,7 @@
 
 			function setLongURL() {
 				
-				// console.log('setLongURL()');
+				console.log('setLongURL()');
 				
 				var httpBase = $(location).attr('href').substring(0, $(location).attr('href').lastIndexOf("/") + 1);
 				
