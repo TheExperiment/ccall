@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f8bdd817938d227a3886f3da0f8e00f7",
+    "hash": "3208fb7e7cacd179111295919c095dde",
     "packages": [
         {
             "name": "jjaffeux/postmark-inbound-php",
@@ -161,16 +161,16 @@
     "packages-dev": [
         {
             "name": "heroku/heroku-buildpack-php",
-            "version": "v37",
+            "version": "v46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heroku/heroku-buildpack-php.git",
-                "reference": "fff2cbb6bc576722adeef7b11753aa92d051366b"
+                "reference": "63b4c548085bad5197d5ba77bc47c717c2319754"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/fff2cbb6bc576722adeef7b11753aa92d051366b",
-                "reference": "fff2cbb6bc576722adeef7b11753aa92d051366b",
+                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/63b4c548085bad5197d5ba77bc47c717c2319754",
+                "reference": "63b4c548085bad5197d5ba77bc47c717c2319754",
                 "shasum": ""
             },
             "bin": [
@@ -201,7 +201,7 @@
                 "nginx",
                 "php"
             ],
-            "time": "2014-08-14 15:22:06"
+            "time": "2014-11-02 21:26:10"
         }
     ],
     "aliases": [],
@@ -209,7 +209,7 @@
     "stability-flags": [],
     "prefer-stable": false,
     "platform": {
-        "php": "~5.5.15"
+        "php": ">=5.5.15"
     },
     "platform-dev": []
 }
