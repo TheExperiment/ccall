@@ -3,7 +3,7 @@
 	"description": "utility",
 	"license": "MIT",
 	"require": {
-		"php": "~5.5.15",
+		"php": ">=5.5.15",
 		"monolog/monolog": "~1.10.0",
 		"jjaffeux/postmark-inbound-php": ">=2.0"
 	},
